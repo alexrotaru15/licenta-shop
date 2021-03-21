@@ -115,7 +115,7 @@ celerybeat.pid
 
 # Environments
 # .env
-licenta/.env
+.env
 .venv/
 env/
 venv/
