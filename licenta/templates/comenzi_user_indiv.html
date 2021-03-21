@@ -1,0 +1,27 @@
+{% extends "principal.html" %}
+{% block continut_unic %}
+    <h3>Comanda numărul {{ linie.id }}</h3>
+    <div class="sidebar-stanga col-md-12 col-lg-7">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Produs</th>
+                    <th>Cantitate</th>
+                    <th>Preț</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for produs in produse.items() %}    
+                <tr>
+                    <td>{{produs[1][0]}}</td>
+                    <td>{{produs[1][1]}}</td>
+                    <td>{{produs[1][2]}} lei</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="my-4">
+        <p>Total plată: {{ linie.total }} lei</p>
+    </div>
+{% endblock %}

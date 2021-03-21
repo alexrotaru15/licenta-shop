@@ -1,0 +1,83 @@
+{% extends "principal.html" %}
+{% block continut_unic %}
+    <div class="sidebar-stanga col-sm-12 col-md-5">
+        <div class="pagina-cont-content ">
+            <div class="formular-cont-nou">
+                <form action="" method="POST">
+                    {{ formular.hidden_tag() }}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4">Contul meu</legend>
+                        <div class="form-group">
+                            {{ formular.user_name.label(class="form-control-label") }}
+                            {% if formular.user_name.errors %}
+                                {{ formular.user_name(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for eroare in formular.user_name.errors %}
+                                        <span>{{ eroare }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ formular.user_name(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ formular.nume.label(class="form-control-label") }}
+                            {% if formular.nume.errors %}
+                                {{ formular.nume(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for eroare in formular.nume.errors %}
+                                        <span>{{ eroare }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ formular.nume(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ formular.email.label(class="form-control-label") }}
+                            {% if formular.email.errors %}
+                                {{ formular.email(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for eroare in formular.email.errors %}
+                                        <span>{{ eroare }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ formular.email(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ formular.adresa.label(class="form-control-label") }}
+                            {% if formular.adresa.errors %}
+                                {{ formular.adresa(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for eroare in formular.adresa.errors %}
+                                        <span>{{ eroare }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ formular.adresa(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ formular.telefon.label(class="form-control-label") }}
+                            {% if formular.telefon.errors %}
+                                {{ formular.telefon(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for eroare in formular.telefon.errors %}
+                                        <span>{{ eroare }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ formular.telefon(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+                    </fieldset>
+                    <div class="form-group">
+                        {{ formular.submit(class="btn btn-outline-info") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

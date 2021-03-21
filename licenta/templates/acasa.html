@@ -1,0 +1,38 @@
+{% extends "principal.html" %}
+{% block continut_unic %}
+    <div class="d-flex justify-content-between">
+      <h1 class="d-none d-md-block ml-3">Toate produsele</h1>
+      <div class="d-flex align-items-end">
+        <form action="" method="POST">
+          <button class="btn btn-outline-success ml-3" type="submit">Actualizează filtrul</button>
+          <select name="optiuni_select" id="optiuni_select" action="/" class="optiuni-dropdown">
+              {% for optiune in optiuni %}
+                  {% if selectat == optiune %}
+                    <option value="{{ optiune }}" selected>{{ optiune }}</option>
+                  {% else %}
+                    <option value="{{ optiune }}">{{ optiune }}</option>
+                  {% endif %}
+              {% endfor %}
+          </select>
+        </form>
+      </div>
+    </div>
+    <div class="products container p-grid row">
+      {% for produs in produse %}
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <a href="{{ url_for('produs_indiv', produs_id=produs.id) }}">
+              <img src="{{ url_for('static', filename='pictures/' + produs['poza']) }}" alt="" class="card-img-top">
+            </a>
+            <div class="card-body">
+                <h5 class="card-title p-2 cards-home">{{ produs.nume }}</h5>
+                <h5 class="card-text p-2 pret-acasa cards-home">{{ produs.pret }} lei</h5>
+              <a href="{{ url_for('produs_indiv', produs_id=produs.id) }}" class="btn btn-outline-success btn-sm">Vezi Produs</a>
+            </div>
+          </div>
+        </div>
+      {% else %}
+          <p style="text-align:center; width: 100%">Momentan nu există produse disponibile. Vă rugăm să încercați mai târziu!</p>
+      {% endfor %}
+  </div>
+{% endblock %}

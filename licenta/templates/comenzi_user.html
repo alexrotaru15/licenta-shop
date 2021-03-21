@@ -1,0 +1,23 @@
+{% extends "principal.html" %}
+{% block continut_unic %}
+    {% if comenzi %}
+    <h3>Comenzile utilizatorului {{ current_user.user_name }}</h3>
+    <table class="table">
+        {% if current_user.is_admin %}
+            {% for comanda in comenzi %}
+                <tr>
+                    <td><a href="{{ url_for('user_comenzi_indiv', utilizator=comanda.user, nr_comanda=comanda.id) }}" class="user-indep">Comanda numărul {{ comanda.id }}</a></td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            {% for comanda in comenzi %}
+            <tr>
+                <td><a href="{{ url_for('user_comenzi_interface_indiv', utilizator=comanda.user, nr_comanda=comanda.id) }}" class="user-indep">Comanda numărul {{ comanda.id }}</a></td>
+            </tr>
+            {% endfor %}
+        {% endif %}
+    </table>
+    {% else %}
+        <h3 class="my-3">Nu aveți nici o comandă înregistrată</h3>
+    {% endif %}
+{% endblock %}

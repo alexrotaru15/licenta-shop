@@ -1,0 +1,69 @@
+{% extends "principal.html" %}
+{% block continut_unic %}
+       <h2>Coșul Meu</h2>
+       {% if subtotal > 0 %}
+        <h5>Puteți reveni pe pagina produsului apăsând pe imagine</h5>
+        <form action="" method="POST">
+            <table class="tabel-cos">
+                <thead>
+                    <tr class="linii-cos-tabel">
+                        <th></th>
+                        <th></th>
+                        <th class="linii-cos-tabel prima-linie">Produs</th>
+                        <th class="linii-cos-tabel prima-linie">Preț</th>
+                        <th class="linii-cos-tabel prima-linie">Cantitate</th>
+                        <th class="linii-cos-tabel prima-linie">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for produs in produse %}
+                        <tr class="linii-cos-tabel">
+                            <td class="linii-cos-tabel" style="width: 8%;"><a href="{{ url_for('sterge_din_cos', produs_id=produs.id) }}" class="sterge-din-cos"><i class="fas fa-trash-alt"></i></a></td>
+                            <td class="linii-cos-tabel" style="width: 10%;"><a href="{{ url_for('produs_indiv', produs_id=produs.id) }}"><img src="{{ url_for('static', filename='pictures/' + produs['poza']) }}" alt="" width="100px" height="100px"></a></td>
+                            <td class="linii-cos-tabel">{{ produs.nume }}</td>
+                            <td class="linii-cos-tabel">{{ produs.pret }} lei</td>
+                            <td class="linii-cos-tabel"><input type="number" name="cantitate{{produs.id}}" id="cantitate{{produs.id}}" value="{{ produs.cantitate }}" size="2" style="width: 3.5rem" /></td>
+                            <td class="linii-cos-tabel">{{ produs.pret * produs.cantitate }} lei</td>
+                        </tr>
+                    {% endfor %}
+                    {% if produse %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="modifica-cantitate-cos"><button class="btn btn-danger" type="submit">Update Coș</button></a></td>
+                            <td class="linii-cos-tabel subtotal-cos">{{subtotal}} lei</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+            <div class="total-section">
+                <h2>Costuri</h2>
+                <table cellspacing="0" class="table table-hover total-tabel">
+                    <tbody>
+                        <tr>
+                            <th class="prima-linie">Subtotal</th>
+                            <td>{{ subtotal }} lei</td>
+                        </tr>
+                        <tr>
+                            <th class="prima-linie">Transport</th>
+                            {% if transport == 0 %}
+                                <td>Nu se percepe taxă pentru transport</td>
+                            {% else %}
+                                <td>15.0 lei</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <th class="prima-linie">Total</th>
+                            <td id="total-sum">{{ total }} lei</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a href="{{ url_for('continua_comanda') }}"><button class="btn btn-outline-success btn-md" type="button">Continuă</button></a>
+            </div>
+        {% else %}
+            <div class="m-4">Nu există nici un produs în coș</div>
+        {% endif %}
+    </form>
+{% endblock %}

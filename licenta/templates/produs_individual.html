@@ -1,0 +1,30 @@
+{% extends "principal.html" %}
+{% block continut_unic %}
+    <div class="produs-indiv my-4">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start">
+            <div class="">
+                <img src="{{ url_for('static', filename='pictures/' + produs['poza']) }}" alt="" width="400" height="400">
+            </div>
+            <div class="mx-3">
+                <h3>{{produs.nume}}</h3>
+                <h2 class="produs-indiv-pret">{{produs.pret}} lei</h2>
+                <p>{{produs.descriere}}</p>
+                {% if current_user.is_authenticated %}
+                    <div class="row-indiv row">
+                        <h5 class="mt-1">Selectați cantitatea</h5>
+                        <div class="cantitate-field">
+                            <form action="{{ url_for('adauga_in_cos', produs_id=produs.id) }}" method="POST">
+                                <input type="number" name="cantitate" id="cantitate" value="1" size="2" style="width: 3.5rem" />
+                                <a href="{{ url_for('adauga_in_cos', produs_id=produs.id) }}">
+                                    <button class="btn btn-outline-info ml-2" type="submit">Adaugă în coș</button>
+                                </a>
+                            </form>
+                        </div>
+                    </div>
+                {% else %}
+                    <h5>Pentru a introduce produsul în coș este necesar să vă autentificați.</h5>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

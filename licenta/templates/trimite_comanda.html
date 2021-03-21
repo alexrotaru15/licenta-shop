@@ -1,0 +1,38 @@
+<h4>Comanda mea</h4>
+<table class="tabel-cos">
+    <thead>
+        <tr class="linii-cos-tabel">
+            <th class="linii-cos-tabel prima-linie">Produs</th>
+            <th class="linii-cos-tabel prima-linie">Preț</th>
+            <th class="linii-cos-tabel prima-linie">Cantitate</th>
+            <th class="linii-cos-tabel prima-linie">Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for produs in cos_curent %}
+            <tr class="linii-cos-tabel">
+                <td class="linii-cos-tabel">{{ produs.nume }}</td>
+                <td class="linii-cos-tabel">{{ produs.pret }} lei</td>
+                <td class="linii-cos-tabel">{{ produs.cantitate }}</td>
+                <td class="linii-cos-tabel">{{ produs.pret * produs.cantitate }} lei</td>
+            </tr>
+        {% endfor %}
+        {% if produse %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="linii-cos-tabel subtotal-cos">{{subtotal}} lei</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+<div>
+    <p>Subtotal: {{ subtotal }} lei</p>
+    {% if subtotal < 75 %}
+        <p>Transport: 15 lei</p>
+    {% else %}
+        <p>Transport: Nu se percepe taxă pentru transport</p>
+    {% endif %}
+    <p>Total: {{ total }}</p>
+</div>

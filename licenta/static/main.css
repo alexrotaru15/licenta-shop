@@ -1,0 +1,186 @@
+body {
+    background-color: #F8FAF4;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
+}
+
+a.extern {
+    color: white;
+}
+
+a.extern:hover {
+    color: red;
+}
+
+a.user-indep {
+    color:#088D04;
+}
+
+a.user-indep:hover {
+    color: red;
+    text-decoration: none;
+}
+
+a.sterge-din-cos:hover {
+    color:red;
+}
+
+.products {
+    width: 100%;
+    margin-top: 2%;
+    margin-bottom: 3%;
+}
+
+.admin-principal {
+    margin: 80px 0;
+}
+
+.sectiune-main {
+    margin-bottom: 50px;
+    margin-top: 25px;
+}
+
+.pagina-cont-content {
+    height: 95%;
+}
+
+.bara_sus {
+    background: #F4F9EA;
+    width: 100%;
+    height: 50px;
+    font-size: 1.4rem;
+}
+
+.sociale {
+    display: inline-table;
+    height: 100%;
+}
+
+.aliniere_dreapta {
+    margin: auto 0;
+    display: inline-block;
+}
+
+.navbar {
+    text-transform: uppercase;
+    margin-right: 3px;
+}
+
+.d-inline {
+    text-align: center;
+}
+
+.fa-linkedin {
+    margin-left: 5px;
+}
+
+.cards-home {
+    margin-top: -20px;
+}
+
+.pret-acasa {
+    color: rgb(129, 5, 191);
+    font-size: 1.5rem;
+}
+
+.produs-indiv-pret {
+    color: rgb(129, 5, 191);
+}
+
+.tabel-cos {
+    width: 80%;
+    border: 1px solid rgba(0,0,0,0.1);
+    margin-top: 20px;
+    margin-bottom: 50px;
+    margin-right: 10px;
+    border: none;
+}
+
+.prima-linie {
+    font-size: 1.3rem;
+    color: #077B03;
+}
+
+.linii-cos-tabel {
+    border: 1px solid rgba(0,0,0,0.1);
+    margin: auto;
+    text-align: center;
+}
+
+.subtotal-cos {
+    font-size: 1.5rem;
+}
+
+.total-section {
+    width: 30%;
+    margin-right: 100px;
+    margin-bottom: 10%;
+}
+
+.total-tabel {
+    border-collapse: separate;
+    margin: 0 0 6px;
+    padding: 0;
+}
+
+.cantitate-field {
+    margin-left: 10px;
+    width: auto;
+}
+
+.row-indiv {
+    margin: 0;
+}
+
+.trimite-comanda {
+    margin-top: 2.5rem;
+    margin-bottom: 10%;
+}
+
+.modifica-cantitate-cos {
+    text-align: center;
+    width: 20%;
+}
+
+.optiuni-dropdown {
+    margin: auto 45px auto 10px;
+}
+
+#bine-ai-revenit {
+    font-size: 1.2rem;
+    margin-top: 10px;
+    margin-right: 5px;
+}
+
+#footer {
+    background-color: black;
+    color: white;
+    text-align: right;
+}
+
+#creator {
+    margin-right: 10px;
+}
+
+#cauta-camp {
+    width: 120px;
+}
+
+#total-sum {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+#mod_plata {
+    list-style-type: none;
+    margin-top: 1rem;
+}
+
+#mod_plata-0 {
+    margin-right: 0.2rem;
+}
+
+#mod_plata-1 {
+    margin-left: 1rem;
+    margin-right: 0.2rem;
+}

@@ -1,0 +1,35 @@
+<h4>Comanda mea</h4>
+<table class="tabel-cos">
+    <thead>
+        <tr class="linii-cos-tabel">
+            <th></th>
+            <th></th>
+            <th class="linii-cos-tabel prima-linie">Produs</th>
+            <th class="linii-cos-tabel prima-linie">Preț</th>
+            <th class="linii-cos-tabel prima-linie">Cantitate</th>
+            <th class="linii-cos-tabel prima-linie">Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for produs in cos_curent %}
+            <tr class="linii-cos-tabel">
+                <td class="linii-cos-tabel" style="width: 8%;"><a href="{{ url_for('sterge_din_cos', produs_id=produs.id) }}"><i class="fas fa-trash-alt"></i></a></td>
+                <td class="linii-cos-tabel" style="width: 10%;"><a href="{{ url_for('produs_indiv', produs_id=produs.id) }}"><img src="{{ url_for('static', filename='pictures/' + produs['poza']) }}" alt="" width="100px" height="100px"></a></td>
+                <td class="linii-cos-tabel">{{ produs.nume }}</td>
+                <td class="linii-cos-tabel">{{ produs.pret }} lei</td>
+                <td class="linii-cos-tabel">{{ produs.cantitate }}</td>
+                <td class="linii-cos-tabel">{{ produs.pret * produs.cantitate }} lei</td>
+            </tr>
+        {% endfor %}
+        {% if produse %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="linii-cos-tabel subtotal-cos">{{subtotal}} lei</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>

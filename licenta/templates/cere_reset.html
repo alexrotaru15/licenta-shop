@@ -1,0 +1,29 @@
+{% extends "principal.html" %}
+{% block continut_unic %}
+    <div class="sidebar-stanga col-sm-12 col-md-5">
+        <div class="formular-cont-nou">
+            <form action="" method="POST">
+                {{ formular.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Resetare parolă</legend>
+                    <div class="form-group">
+                        {{ formular.email.label(class="form-control-label") }}
+                        {% if formular.email.errors %}
+                            {{ formular.email(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for eroare in formular.email.errors %}
+                                    <span>{{ eroare }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ formular.email(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ formular.submit(class="btn btn-outline-info") }}
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

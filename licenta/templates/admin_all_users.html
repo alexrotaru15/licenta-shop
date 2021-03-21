@@ -1,0 +1,27 @@
+{% extends "principal.html" %}
+{% block continut_unic %}
+    <table class="table">
+        <thead>
+            <th>ID</th>
+            <th>user_name</th>
+            <th>nume</th>
+            <th>email</th>
+            <th>adresa</th>
+            <th>telefon</th>
+            <th>is_admin</th>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td><a href="{{ url_for('user_comenzi', utilizator=user.id) }}" class="user-indep">{{ user.user_name }}</a></td>
+                    <td>{{ user.nume }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.adresa }}</td>
+                    <td>{{ user.telefon }}</td>
+                    <td>{{ user.is_admin }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

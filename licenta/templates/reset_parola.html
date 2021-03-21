@@ -1,0 +1,42 @@
+{% extends "principal.html" %}
+{% block continut_unic %}
+    <div class="sidebar-stanga col-sm-12 col-md-5">
+        <div class="formular-cont-nou">
+            <form action="" method="POST">
+                {{ formular.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Resetare parolă</legend>
+                    <div class="form-group">
+                        {{ formular.parola.label(class="form-control-label") }}
+                        {% if formular.parola.errors %}
+                            {{ formular.parola(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for eroare in formular.parola.errors %}
+                                    <span>{{ eroare }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ formular.parola(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ formular.confirmare_parola.label(class="form-control-label") }}
+                        {% if formular.confirmare_parola.errors %}
+                            {{ formular.confirmare_parola(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for eroare in formular.confirmare_parola.errors %}
+                                    <span>{{ eroare }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ formular.confirmare_parola(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ formular.submit(class="btn btn-outline-info") }}
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

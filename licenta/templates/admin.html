@@ -1,0 +1,44 @@
+{% extends "principal.html" %}
+{% block continut_unic %}
+    <div class="row admin-principal">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Utilizatori</h3>
+                </div>
+                <div class="panel-body">
+                    Vezi utilizatorii înregistrați
+                </div>
+                <div>
+                    <a href="{{ url_for('all_users') }}" class="btn btn-success">Click Aici</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Produs Nou</h3>
+                </div>
+                <div class="panel-body">
+                    Adaugă un produs nou
+                </div>
+                <div>
+                    <a href="{{ url_for('produs_nou') }}" class="btn btn-success">Click Aici</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Modifică Produs</h3>
+                </div>
+                <div class="panel-body">
+                    Modifică un produs existent
+                </div>
+                <div>
+                    <a href="{{ url_for('all_produse') }}" class="btn btn-success">Click Aici</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

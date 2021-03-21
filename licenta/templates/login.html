@@ -1,0 +1,54 @@
+{% extends "principal.html" %}
+{% block continut_unic %}
+    <div class="sidebar-stanga col-sm-12 col-md-5">
+        <div class="formular-cont-nou">
+            <form action="" method="POST">
+                {{ formular.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Intră în cont</legend>
+                    <div class="form-group">
+                        {{ formular.email.label(class="form-control-label") }}
+                        {% if formular.email.errors %}
+                            {{ formular.email(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for eroare in formular.email.errors %}
+                                    <span>{{ eroare }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ formular.email(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ formular.parola.label(class="form-control-label") }}
+                        {% if formular.parola.errors %}
+                            {{ formular.parola(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for eroare in formular.parola.errors %}
+                                    <span>{{ eroare }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ formular.parola(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-check">
+                        {{ formular.remember(class="form-check-input") }}
+                        {{ formular.remember.label(class="form-check-label") }}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ formular.submit(class="btn btn-outline-info") }}
+                </div>
+                <small class="text-muted ml-2">
+                    <a href="{{ url_for('cere_reset') }}">Am uitat parola</a>
+                </small>
+            </form>
+            <div class="border-top mb-3 pt-3">
+                <small class="text-muted">
+                    Ai nevoie de un cont? <a href="{{ url_for('cont_nou') }}" class="ml-2">Cont nou</a>
+                </small>
+            </div>
+        </div>
+    </div>
+{% endblock %}
