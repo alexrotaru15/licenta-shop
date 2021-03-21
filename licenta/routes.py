@@ -11,14 +11,16 @@ from flask_login import login_user, logout_user, current_user, login_required
 from flask_mail import Message
 from sqlalchemy.sql.expression import func
 
-
 # pagina home este pagina pe care utilizatorul o vede la intrarea în aplicație
+
+
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     # utilizatorul are posibilitatea de a alege între 4 opțiuni de filtrare
     # a produselor de pe prima pagină
-    optiuni = ['Alfabetic A-Z', 'Alfabetic Z-A', 'Preț crescător', 'Preț descrescător']
+    optiuni = ['Alfabetic A-Z', 'Alfabetic Z-A',
+               'Preț crescător', 'Preț descrescător']
     optiune_final = 'Alfabetic A-Z'
     if request.method == 'POST':
         optiune_final = request.form['optiuni_select']
@@ -52,7 +54,7 @@ def producatori():
     return render_template('producatori.html', title='Producători')
 
 
-# pagina admin este accesibilă doar utilizatorilor care au True 
+# pagina admin este accesibilă doar utilizatorilor care au True
 # pe coloana is_admin din tabelul User al bazei de date
 @app.route('/admin')
 def admin():
@@ -87,7 +89,7 @@ def user_comenzi(utilizator):
     return render_template('comenzi_user.html', title='Comenzi user', comenzi=comenzi)
 
 
-# administratorul poate vedea comenzile și individual 
+# administratorul poate vedea comenzile și individual
 # pentru fiecare utilizator
 @app.route('/admin/users/<int:utilizator>/comenzi/<int:nr_comanda>')
 def user_comenzi_indiv(utilizator, nr_comanda):
@@ -109,7 +111,7 @@ def user_comenzi_interface(utilizator):
         comenzi = Comenzi.query.filter_by(user=utilizator).all()
     else:
         return redirect(url_for('home'))
-    return render_template('comenzi_user.html', title='Comenzi user', comenzi=comenzi)    
+    return render_template('comenzi_user.html', title='Comenzi user', comenzi=comenzi)
 
 
 @app.route('/users/<int:utilizator>/comenzi/<int:nr_comanda>')
@@ -148,7 +150,8 @@ def produs_nou():
         if formular.validate_on_submit():
             # produsul va fi salvat în baza de date și accesat din pagina home
             picture = save_poza(formular.poza.data)
-            produs = Produs(nume=formular.nume.data, descriere=formular.descriere.data, poza=picture, pret=formular.pret.data)
+            produs = Produs(nume=formular.nume.data, descriere=formular.descriere.data,
+                            poza=picture, pret=formular.pret.data)
             database.session.add(produs)
             database.session.commit()
             flash('Produsul a fost adăugat cu succes', 'success')
@@ -223,7 +226,8 @@ def adauga_in_cos(produs_id):
         # pentru a adăuga un produs în coș funcția primește ca parametru id-ul produsului respectiv
         if request.method == 'POST':
             # verificăm dacă produsul există deja în coș
-            exista_produs = Cos.query.filter_by(user=current_user.id, produs=produs.id).first()
+            exista_produs = Cos.query.filter_by(
+                user=current_user.id, produs=produs.id).first()
             cantitate = request.form['cantitate']
             if exista_produs:
                 # daca produsul există deja în coș atunci modificăm doar cantitatea
@@ -232,7 +236,8 @@ def adauga_in_cos(produs_id):
                 database.session.commit()
             else:
                 # altfel, adăugăm produsul în coș
-                item_cos = Cos(user=current_user.id, produs=produs.id, cantitate=cantitate)
+                item_cos = Cos(user=current_user.id,
+                               produs=produs.id, cantitate=cantitate)
                 database.session.add(item_cos)
                 database.session.commit()
         flash('Produsul a fost adăugat în coș', 'success')
@@ -255,18 +260,20 @@ def sterge_din_cos(produs_id):
 @app.route('/cosul_meu', methods=['POST', 'GET'])
 def cosul_meu():
     if current_user.is_authenticated:
-        produse = Produs.query.join(Cos, Produs.id == Cos.produs).add_columns(Produs.id, Produs.nume, Produs.poza, Produs.pret, Cos.cantitate).filter(Cos.user == current_user.id)
+        produse = Produs.query.join(Cos, Produs.id == Cos.produs).add_columns(
+            Produs.id, Produs.nume, Produs.poza, Produs.pret, Cos.cantitate).filter(Cos.user == current_user.id)
         if request.method == 'POST':
             for produs in produse:
                 # cantitatea poate fi modificată și direct din coș
-                linie_cos = Cos.query.filter_by(user=current_user.id, produs=produs.id).first()
+                linie_cos = Cos.query.filter_by(
+                    user=current_user.id, produs=produs.id).first()
                 noua_cantitate = request.form[f'cantitate{produs.id}']
                 if linie_cos.cantitate != noua_cantitate:
                     linie_cos.cantitate = noua_cantitate
                     database.session.commit()
             flash('Coșul a fost modificat!', 'success')
         subtotal = 0
-        # calculăm suma de plată a produselor din coș        
+        # calculăm suma de plată a produselor din coș
         for produs in produse:
             subtotal = subtotal + (produs.cantitate * produs.pret)
         # dacă suma este mai mare decât 75 atunci prețul transportului este 0
@@ -278,7 +285,8 @@ def cosul_meu():
         total = subtotal + transport
         return render_template('cosul_meu.html', title='Coșul Meu', produse=produse, subtotal=subtotal, transport=transport, total=total)
     else:
-        flash('Trebuie să vă autentificați pentru a putea vedea produsele din coș!', 'warning')
+        flash(
+            'Trebuie să vă autentificați pentru a putea vedea produsele din coș!', 'warning')
         return redirect(url_for('home'))
 
 
@@ -291,15 +299,18 @@ def continua_comanda():
             # pentru a confirma adresa utilizatorul va completa o instanță a formularului
             # ConfirmAdresaForm definit în fișierul forms.py
             # formularul va avea inițial datele introduse de utilizator la înregistrare
-            livrare = formular.nume.data + '<br/>' + formular.adresa.data + '<br/>' + formular.telefon.data
-            cos_curent = Produs.query.join(Cos, Produs.id == Cos.produs).add_columns(Produs.id, Produs.nume, Produs.poza, Produs.pret, Cos.cantitate).filter(Cos.user == current_user.id)
+            livrare = formular.nume.data + '<br/>' + \
+                formular.adresa.data + '<br/>' + formular.telefon.data
+            cos_curent = Produs.query.join(Cos, Produs.id == Cos.produs).add_columns(
+                Produs.id, Produs.nume, Produs.poza, Produs.pret, Cos.cantitate).filter(Cos.user == current_user.id)
             subtotal = 0
             produse_comandate = {}
             count = Cos.query.count()
             for linie in cos_curent:
-                # variabila produse_comandate de tip dicționar conține toate produsele 
+                # variabila produse_comandate de tip dicționar conține toate produsele
                 # pe care utilizatorul dorește să le comande
-                produse_comandate[count] = [linie.nume, linie.cantitate, linie.pret]
+                produse_comandate[count] = [
+                    linie.nume, linie.cantitate, linie.pret]
                 count += 1
                 subtotal = subtotal + (linie.cantitate * linie.pret)
             produse_comandate = str(produse_comandate)
@@ -311,7 +322,8 @@ def continua_comanda():
             mod_plata = formular.mod_plata.data
             # după selectarea modalității de plată creăm o un obiect de tip linie a tabelului Comenzi
             # adăugăm produsul în baza de date și salvăm
-            comanda = Comenzi(user=current_user.id, produse=produse_comandate, date_livrare=livrare, mod_plata=mod_plata, total=total)
+            comanda = Comenzi(user=current_user.id, produse=produse_comandate,
+                              date_livrare=livrare, mod_plata=mod_plata, total=total)
             database.session.add(comanda)
             database.session.commit()
             # adăugăm comanda și în tabelul Tranzactii
@@ -320,7 +332,8 @@ def continua_comanda():
             database.session.add(tranzactie)
             database.session.commit()
             for linie in cos_curent:
-                produs_comandat = ProduseComandate(comanda=comanda.id, produs=linie.nume, cantitate=linie.cantitate)
+                produs_comandat = ProduseComandate(
+                    comanda=comanda.id, produs=linie.nume, cantitate=linie.cantitate)
                 database.session.add(produs_comandat)
             database.session.commit()
             cos = Cos.query.all()
@@ -329,10 +342,11 @@ def continua_comanda():
             for linie_cos in cos:
                 database.session.delete(linie_cos)
                 database.session.commit()
-            flash('Comanda a fost trimisă cu success! Veți primi pe email toate detaliile comenzii!', 'success')
+            flash(
+                'Comanda a fost trimisă cu success! Veți primi pe email toate detaliile comenzii!', 'success')
             return redirect(url_for('home'))
         elif request.method == 'GET':
-            # dacă formularul de confirmare a adresei nu este completat, acesta va conține datele 
+            # dacă formularul de confirmare a adresei nu este completat, acesta va conține datele
             # de înregistrare ale utilizatorului
             formular.nume.data = current_user.nume
             formular.adresa.data = current_user.adresa
@@ -344,8 +358,10 @@ def continua_comanda():
 
 # trimitem email-ul de finalizare a comenzii atât utilizatorului cât și adresei folosite ca server
 def trimite_comanda_email(cos_curent, utilizator, subtotal, total):
-    mesaj = Message('Comanda dumneavoastră', sender='legumeromanestionline@gmail.com', recipients=[utilizator.email, 'legumeromanestionline@gmail.com'])
-    mesaj.html = render_template('trimite_comanda.html', cos_curent=cos_curent, subtotal=subtotal, total=total)
+    mesaj = Message('Comanda dumneavoastră', sender='legumeromanestionline@gmail.com',
+                    recipients=[utilizator.email, 'legumeromanestionline@gmail.com'])
+    mesaj.html = render_template(
+        'trimite_comanda.html', cos_curent=cos_curent, subtotal=subtotal, total=total)
     mesaj.body = render_template('trimite_comanda.txt')
     email.send(mesaj)
 
@@ -358,7 +374,7 @@ def login():
     formular = LoginForm()
     if formular.validate_on_submit():
         # verificăm dacă există adresa de email folosită pentru autentificare
-        # în baza de date și dacă parola introdusă este aceeași cu parola hash 
+        # în baza de date și dacă parola introdusă este aceeași cu parola hash
         # din bază
         exista_user = User.query.filter_by(email=formular.email.data).first()
         if exista_user and bcrypt.check_password_hash(exista_user.parola, formular.parola.data):
@@ -372,7 +388,8 @@ def login():
             else:
                 return redirect(url_for('home'))
         else:
-            flash('Adresa de email nu este înregistrată sau parola este greșită', 'danger')
+            flash(
+                'Adresa de email nu este înregistrată sau parola este greșită', 'danger')
     return render_template('login.html', title='Login', formular=formular)
 
 
@@ -386,8 +403,10 @@ def cont_nou():
         # o instanță a clasei RegisterForm
         # parola va fi criptată și obiectul de tip utilizatoru va fi adăugat
         # în baza de date
-        hashed_pw = bcrypt.generate_password_hash(formular.parola.data).decode('utf-8')
-        user = User(user_name=formular.user_name.data, nume=formular.nume.data, email=formular.email.data, parola=hashed_pw, adresa=formular.adresa.data, telefon=formular.telefon.data)
+        hashed_pw = bcrypt.generate_password_hash(
+            formular.parola.data).decode('utf-8')
+        user = User(user_name=formular.user_name.data, nume=formular.nume.data, email=formular.email.data,
+                    parola=hashed_pw, adresa=formular.adresa.data, telefon=formular.telefon.data)
         database.session.add(user)
         database.session.commit()
         flash('Contul a fost creat cu succes! Acum vă puteți autentifica pentru a continua cumpărăturile.', 'success')
@@ -421,8 +440,10 @@ def contul_meu():
 
 # utilizatorii pot trimite și mesaje către server via email
 def trimite_mesaj_contact(nume, xemail, subiect, continut):
-    mesajx = Message(f'Mesaj de la {xemail}', sender='legumeromanestionline@gmail.com', recipients=['legumeromanestionline@gmail.com'])
-    mesajx.html = render_template('trimite_mesaj_contact.html', nume=nume, xemail=xemail, subiect=subiect, continut=continut)
+    mesajx = Message(f'Mesaj de la {xemail}', sender='legumeromanestionline@gmail.com',
+                     recipients=['legumeromanestionline@gmail.com'])
+    mesajx.html = render_template(
+        'trimite_mesaj_contact.html', nume=nume, xemail=xemail, subiect=subiect, continut=continut)
     mesajx.body = render_template('trimite_mesaj_contact.txt')
     email.send(mesajx)
 
@@ -434,10 +455,12 @@ def contact():
     # numele și emailul vor fi adăugate ca default dacă utilizatorul este înregistrat,
     # dar pot trimite mesaje și utilizatorii neînregistrați
     if formular.validate_on_submit():
-        mesaj = MesajeTable(nume=formular.nume.data, email=formular.email.data, subiect=formular.subiect.data, continut=formular.continut.data)
+        mesaj = MesajeTable(nume=formular.nume.data, email=formular.email.data,
+                            subiect=formular.subiect.data, continut=formular.continut.data)
         database.session.add(mesaj)
         database.session.commit()
-        trimite_mesaj_contact(mesaj.nume, mesaj.email, mesaj.subiect, mesaj.continut)
+        trimite_mesaj_contact(mesaj.nume, mesaj.email,
+                              mesaj.subiect, mesaj.continut)
         flash('Mesajul dumneavoastră a fost înregistrat cu succes!', 'success')
         return redirect(url_for('home'))
     elif request.method == 'GET' and current_user.is_authenticated:
@@ -456,7 +479,8 @@ def logout():
 # trimite emailul de resetare a parolei utilizatorului primit ca parametru
 def trimite_reset_parola_email(utilizator):
     token = utilizator.reset_token()
-    mesaj = Message('Cerere de resetare a parolei', sender='legumeromanestionline@gmail.com', recipients=[utilizator.email])
+    mesaj = Message('Cerere de resetare a parolei',
+                    sender='legumeromanestionline@gmail.com', recipients=[utilizator.email])
     mesaj.body = f'''Pentru a putea reseta parola, vă rugăm să accesați următorul link fără a-l altera:
 {url_for('reset_parola', token=token, _external=True)}
 
@@ -492,7 +516,8 @@ def reset_parola(token):
         return redirect(url_for('cere_reset'))
     formular = ResetareParolaForm()
     if formular.validate_on_submit():
-        hashed_pw = bcrypt.generate_password_hash(formular.parola.data).decode('utf-8')
+        hashed_pw = bcrypt.generate_password_hash(
+            formular.parola.data).decode('utf-8')
         trimit_user.parola = hashed_pw
         database.session.commit()
         flash('Parola a fost resetată cu success! Acum vă puteți autentifica!', 'success')
