@@ -1,6 +1,7 @@
 # Fișierul conține clasele ale căror instanțe constituie
 # tabelele bazei de date
-from licenta import database, login_manager, app
+from licenta import login_manager, app
+from licenta import db as database
 from itsdangerous import TimedJSONWebSignatureSerializer
 from datetime import datetime
 from flask_login import UserMixin

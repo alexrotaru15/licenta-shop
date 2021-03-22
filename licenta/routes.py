@@ -4,7 +4,8 @@ import os
 import secrets
 import ast
 from PIL import Image
-from licenta import app, database, bcrypt, email
+from licenta import app, bcrypt, email
+from licenta import db as database
 from licenta.models import User, Produs, Cos, Comenzi, ProduseComandate, MesajeTable, Tranzactii
 from licenta.forms import ContactForm, RegisterForm, LoginForm, UpdateContForm, AdaugaProdusForm, ConfirmAdresaForm, CereResetareParolaForm, ResetareParolaForm
 from flask_login import login_user, logout_user, current_user, login_required
